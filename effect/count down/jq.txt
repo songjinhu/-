@@ -1,0 +1,23 @@
+天时分秒倒计时
+
+function GetRTime(){
+            var EndTime= new Date('2019/09/07 23:59:59');   //终止时间
+            var NowTime = new Date();
+            var t =EndTime.getTime() - NowTime.getTime();
+            var d=parseInt(t/ 1000 / 60 / 60 / 24);
+            h=parseInt(t/ 1000 / 60 / 60 % 24);
+            m=parseInt(t/ 1000 / 60 % 60);
+            s=parseInt(t/ 1000 % 60);
+            d <10 ? d = '0' +d :d =d;
+            h <10 ? h = '0' +h :h =h;
+            m <10 ? m = '0' +m :m =m;
+            s <10 ? s = '0' +s :s =s;
+            var time = d+'天'+h+'时'+m+'分'+s+'秒';
+            $(".spanTime").html(time)
+            if(t < 0){
+                clearTimeout(GetRTime);
+                return false;
+            }
+            setTimeout(GetRTime,1000);
+}
+            setInterval(GetRTime(),1000);

@@ -1,0 +1,8 @@
+Èý½ÇÍ¼°¸
+Width:0;
+Height:0;
+Border:10px solid red;
+Border-top-color:black;
+Border-bottom:none;
+Border-left-color:transparent;
+Border-right-color:transparent;

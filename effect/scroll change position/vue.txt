@@ -1,0 +1,37 @@
+<div :class="{ kind : local , 'isFixed':flog}">
+            <div>{{ val1 }}</div>
+            <div>{{ val2 }}</div>
+            <div>{{ val3 }}</div>
+</div>
+
+
+local:true,
+flog:false,
+
+
+mounted () {
+        window.addEventListener('scroll', this.handleScroll)
+    },
+
+    methods:{
+        handleScroll:function(){
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+            // console.log(scrollTop)
+            var offsetTop = document.querySelector(".mid").offsetTop
+            // console.log(offsetTop)
+             if (scrollTop > offsetTop) {
+               this.local=false;
+               this.flog=true;
+                 
+            } else {
+               this.local=true;
+               this.flog=false;
+            }
+
+      },
+     
+    
+    },
+    destroyed(){
+          window.removeEventListener('scroll',this.handleScroll)
+      }

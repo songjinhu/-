@@ -1,0 +1,42 @@
+vue倒计时
+
+<span>
+{  d  }}
+</span>
+<span>
+{{  h  }}
+ </span>
+<span>
+{{  m  }}
+</span>
+<span>
+{{  mm  }}
+</span>
+
+
+               h:"",
+               m:"",
+               d:"",
+               mm:"",
+
+time:function(){
+                //获取当前时间
+                let date = new Date();
+                let now = date.getTime();
+                //设置截止时间
+                let endDate = new Date("2019-4-15 23:23:23");
+                let end = endDate.getTime();
+                //时间差
+                let leftTime = end - now;
+                //定义变量 d,h,m,s保存倒计时的时间
+                if (leftTime >= 0) {
+                    this.d = Math.floor(leftTime / 1000 / 60 / 60 / 24)+"天";
+                    this.h = Math.floor(leftTime / 1000 / 60 / 60 % 24)+"时";
+                    this.m = Math.floor(leftTime / 1000 / 60 % 60)+"分";
+                    this.mm=Math.floor(leftTime / 1000 % 60)+"秒";
+                }
+               
+                //递归每秒调用countTime方法，显示动态时间效果
+                setTimeout(this.time, 1000);
+
+            }

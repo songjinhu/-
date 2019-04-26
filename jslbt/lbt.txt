@@ -1,0 +1,170 @@
+<div class="m-view">
+    <div class="slide" style="left: -800px">
+      <img src="../lunbo/5.jpg" alt="4">
+      <img src="../lunbo/1.jpg" alt="0">
+      <img src="../lunbo/2.jpg" alt="1">
+      <img src="../lunbo/3.jpg" alt="2">
+      <img src="../lunbo/4.jpg" alt="3">
+      <img src="../lunbo/5.jpg" alt="4">
+      <img src="../lunbo/1.jpg" alt="0">
+    </div>
+    <div class="prev"><</div>
+    <div class="next">></div>
+    <div class="pointer">
+      <span class="button on" index="0"></span>
+      <span class="button" index="1"></span>
+      <span class="button" index="2"></span>
+      <span class="button" index="3"></span>
+      <span class="button" index="4"></span>
+    </div>
+</div>
+
+
+css:
+.m-view,.m-view .slide img{
+      position: relative;/*作为绝对定位的父元素*/
+      width: 800px;
+      height: 600px;
+    }
+    .m-view{
+      overflow: hidden;/*将超出该div的子元素隐藏*/
+    }
+    .m-view .slide{
+      position: absolute;
+      width: 8000px;
+      height: 600px;
+    }
+    .m-view .slide img{
+      margin-right: -5px;
+    }
+    .m-view .prev,.m-view .next{
+      position: absolute;
+      top: 40%;
+      font: 60px/60px Microsoft YaHei;
+      color: #00BFFF;
+    }
+    .m-view .prev{
+      left: 10px;
+    }
+    .m-view .next{
+      right: 10px;
+    }
+    .m-view .pointer{
+      position: absolute;
+      bottom: 40px;
+      left: 33%;
+    }
+    .m-view .pointer span{
+      display: inline-block;/*水平排列*/
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+      margin-right: 10px;
+      background-color: #00FF00;
+    }
+    .m-view .pointer .on{/*点亮当前图片对应的圆圈*/
+      background-color: #1E90FF;
+    }
+
+
+
+
+
+<script type="text/javascript">
+    var view=document.getElementsByClassName('m-view')[0];
+    var slide=document.getElementsByClassName('slide')[0];
+    var prev=document.getElementsByClassName('prev')[0];
+    var next=document.getElementsByClassName('next')[0];
+    var button=document.getElementsByClassName('button');
+    var curIndex=0;//当前图片的索引位置
+    var toggled=true;//是否正在切换，true表明切换已完成，此时才能切换
+    /* Toggle函数实现切换一张图片的功能 */
+    function Toggle () {
+      var TIMER=50;//滑动一次所用的时间，它是setInterval的第二个参数
+      var time=800;//每切换一张图片总共用的时长
+      var times=time/TIMER;//每切换一张图片需滑动的次数
+      var stepLenth=800/times;//每次滑动的步长
+      var leftToggle=function () {
+        var t1=times;
+        function leftStep(){
+          slide.style.left=parseInt(slide.style.left)+stepLenth+"px";
+          t1--;
+          if (!t1) {
+            clearInterval(interval);
+            curIndex--;
+            if (curIndex<0) {
+              slide.style.left=parseInt(slide.style.left)-4000+"px";
+              curIndex=4;
+            };
+            toggled=true;
+          };
+        };
+        if (toggled==true) {
+          toggled=false;
+          button[curIndex].className="button";
+          if (curIndex!=0) {
+            button[curIndex-1].className="button on";
+          }else{
+            button[curIndex+4].className="button on";
+          }
+          var interval=setInterval(leftStep,TIMER);
+        };
+      };
+      var rightToggle=function () {
+        var t2=times;
+        function leftStep(){
+          slide.style.left=parseInt(slide.style.left)-stepLenth+"px";
+          t2--;
+          if (!t2) {
+            clearInterval(interval);
+            curIndex++;
+            if (curIndex>4) {
+              slide.style.left=parseInt(slide.style.left)+4000+"px";
+              curIndex=0;
+            };
+            toggled=true;
+          };
+        };
+        if (toggled==true) {
+          toggled=false;
+          button[curIndex].className="button";
+          if (curIndex!=4) {
+            button[curIndex+1].className="button on";
+          }else{
+            button[curIndex-4].className="button on";
+          };
+          var interval=setInterval(leftStep,TIMER);
+        };
+      }
+      this.leftToggle=leftToggle;//输出对外的接口
+      this.rightToggle=rightToggle;
+    };
+    var toggle=new Toggle();
+    prev.onclick=function () {
+      toggle.leftToggle();
+    };
+    next.onclick=function () {
+      toggle.rightToggle();
+    };
+    /* 点击圆圈跳转功能 */
+    for (var i = 0; i < button.length; i++) {
+      button[i].onclick=function () {
+        var newIndex=parseInt(this.getAttribute("index"));
+        if (newIndex!=curIndex) {
+          var distance=-800*(newIndex-curIndex);
+          slide.style.left=parseInt(slide.style.left)+distance+"px";
+          button[curIndex].className="button";
+          button[newIndex].className="button on";
+          curIndex=newIndex;
+        };
+      };
+    }
+    /* 自动播放功能，鼠标移上去停止播放，移开再次播放 */
+    var intervalo=setInterval(toggle.rightToggle,3000);
+    view.onmouseover=function () {
+      clearInterval(intervalo);
+    }
+    view.onmouseout=function () {
+      intervalo=setInterval(toggle.rightToggle,3000);
+    }
+  </script>

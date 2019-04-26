@@ -1,0 +1,98 @@
+ÂÖ²¥Í¼
+//css
+
+<div class="myDiv2-2">
+	<ul>
+		<li>
+			<img src="img/t012c5c0078eee282c6.png"/>
+		</li>
+		<li>
+			<img src="img/t01539c9a4f88bd129f.png" />
+		</li>
+		<li>
+			<img src="img/t01ebfba1c3bc5f37e5.png" />
+		</li>
+	</ul>
+</div>
+
+<div class="andiv">
+    <div class="left">
+    
+    </div>
+    <div class="right">
+    
+    </div>
+</div>
+
+<div class="myDiv2-3">
+	<ul>
+		<li class="first bs"></li>
+		<li class="bs"></li>
+		<li class="bs"></li>
+	</ul>
+</div>
+
+//js
+function lbt1(){
+	var $li= $(".myDiv2-3 ul li");
+	var b = $li.length-1;
+	var li_index = 0;
+	var $img = $(".myDiv2-2 ul li");
+                var $xan = $(".andiv div");
+	var time = null;
+	
+	$li.hover(function(){
+
+		li_index = $(this).index();
+		play()
+	})
+
+	$li.click(function(){
+		li_index = $(this).index();
+		play();
+	})
+	
+	function play(){
+		$li.eq(li_index).addClass("first").siblings().removeClass("first");
+		$img.eq(li_index).fadeIn().siblings().fadeOut();
+	};
+
+$xan.on("click",function(){
+		var index = $(this).index();
+		if(index){
+			li_index++;
+			if(li_index > b){
+				li_index = 0;
+			};
+			play();
+		}else{
+			li_index--;
+			if(li_index < 0){
+				li_index = b;
+			}
+			play();
+		};
+	});
+	
+	
+	//¶¨Ê±ÂÖ²¥
+	function auto(){
+		time = setInterval(function(){
+			li_index++;
+			if(li_index > b){
+				li_index = 0;
+			}
+			play();
+		},5000);
+	};
+	auto();
+	
+	$(".myDiv4").hover(function(){
+		clearInterval(time);
+	},function(){
+		auto();
+	});
+	}
+
+
+

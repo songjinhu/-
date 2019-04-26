@@ -1,0 +1,34 @@
+vue写轮播图
+引入vue-swiper-component模块
+import { Swiper,Slide } from "vue-swiper-component";
+import oneImg from "@/aeeret/img";
+export default{
+//注册组件
+    components:{
+	Swiper,
+           	Slide
+    },
+    data(){
+        return{
+              slidesReal[{
+ 	    src:oneImg 
+               }]
+
+        }
+    }
+}
+
+<swiper
+    v-if="slidesReal.length>0"
+    :autoPlay="true"
+    :showIndicator="true"
+    interval="2500"
+    duration="500"
+>
+    <Slide
+        v-for="(value,index) in slidesReal"
+        :key="index"
+    >
+        <img :src="value.src">
+    </Slide>
+</swiper>
